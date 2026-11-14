@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>KPOCU HUB — магазин кросівок</title>
+    <meta name="description"
+        content="KPOCU HUB: кросівки для міста, бігу та ретро-стилю. Нові колекції, швидка доставка, безкоштовна від 3 000 ₴.">
+    <meta property="og:title" content="KPOCU HUB — магазин кросівок">
+    <meta property="og:description" content="Кросівки для міста, бігу та ретро-стилю.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Onest:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #efefec;
+            --panel: #fff;
+            --ink: #111;
+            --mute: #62625d;
+            --line: #d4d4cf;
+            --lime: #c6f432;
+            --on-lime: #111;
+            --red: #e4402e;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0d0d0e;
+                --panel: #19191b;
+                --ink: #f3f3ef;
+                --mute: #9a9a94;
+                --line: #2c2c2f;
+                color-scheme: dark
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #0d0d0e;
+            --panel: #19191b;
+            --ink: #f3f3ef;
+            --mute: #9a9a94;
+            --line: #2c2c2f;
+            color-scheme: dark
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: inherit
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(70px + env(safe-area-inset-top, 0px))
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 400 1.0625rem/1.6 Onest, system-ui, sans-serif
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0 0 auto;
+            height: env(safe-area-inset-top, 0px);
+            background: var(--bg);
+            z-index: 30
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: Syne, Onest, system-ui, sans-serif;
+            margin: 0;
+            line-height: 1
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+            cursor: pointer
+        }
+
+        a {
+            color: inherit
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--lime);
+            outline-offset: 2px;
+            box-shadow: 0 0 0 5px var(--ink)
+        }
+
+        .wrap {
+            width: min(1200px, 100% - 2.5rem);
+            margin-inline: auto
+        }
+
+        header {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 20;
+            background: var(--bg);
+            border-bottom: 2px solid var(--ink)
+        }
+
+        header .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 62px
+        }
+
+        .logo {
+            font: 800 1.45rem Syne, sans-serif;
+            text-decoration: none;
+            letter-spacing: -.02em
+        }
+
+        .logo span {
+            background: var(--lime);
+            color: var(--on-lime);
+            padding: 0 .35rem;
+            margin-left: .25rem
+        }
+
+        nav {
+            display: flex;
+            gap: 1.3rem;
+            align-items: center
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 500
+        }
+
+        .ib {
+            border: 2px solid var(--ink);
+            background: none;
+            border-radius: 99px;
+            height: 40px;
+            min-width: 40px;
+            padding: 0 .8rem;
+            font-weight: 500
+        }
+
+        .ib b {
+            background: var(--lime);
+            color: var(--on-lime);
+            border-radius: 99px;
+            padding: 0 .45rem;
+            margin-left: .3rem
+        }
+
+        .tick {
+            background: var(--ink);
+            color: var(--bg);
+            overflow: hidden;
+            white-space: nowrap;
+            font: 700 .9rem Syne, sans-serif;
+            padding: .5rem 0
+        }
+
+        .tick div {
+            display: inline-block;
+            animation: mq 22s linear infinite
+        }
+
+        @keyframes mq {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        .hero .wrap {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 2rem;
+            align-items: center;
+            padding: clamp(2rem, 6vw, 4.5rem) 0
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 9vw, 7.5rem);
+            font-weight: 800;
+            letter-spacing: -.04em
+        }
+
+        .hero h1 span {
+            display: block;
+            animation: up .8s cubic-bezier(.2, .9, .3, 1) both
+        }
+
+        .hero h1 span:nth-child(2) {
+            animation-delay: .12s;
+            background: var(--lime);
+            color: var(--on-lime);
+            display: inline-block;
+            padding: 0 .15em
+        }
+
+        @keyframes up {
+            from {
+                opacity: 0;
+                transform: translateY(40%)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .hero p {
+            max-width: 42ch;
+            margin: 1.4rem 0 1.8rem;
+            color: var(--mute);
+            font-size: 1.15rem
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--ink);
+            color: var(--bg);
+            border: 2px solid var(--ink);
+            padding: .85rem 1.7rem;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: transform .2s
+        }
+
+        .btn:hover {
+            transform: translateY(-2px)
+        }
+
+        .btn.lime {
+            background: var(--lime);
+            color: var(--on-lime)
+        }
+
+        .stage {
+            background: var(--lime);
+            border-radius: 28px;
+            padding: 1.5rem;
+            animation: pop 1s .2s both
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: scale(.94) rotate(2deg)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .stage svg {
+            display: block;
+            width: 100%;
+            animation: float 5s ease-in-out infinite
+        }
+
+        @keyframes float {
+            50% {
+                transform: translateY(-10px) rotate(-3deg)
+            }
+        }
+
+        section {
+            padding: 3.5rem 0
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.6rem
+        }
+
+        h2 {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 800;
+            letter-spacing: -.03em
+        }
+
+        .ctl {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        .chip {
+            border: 2px solid var(--ink);
+            background: none;
+            border-radius: 99px;
+            padding: .35rem 1rem;
+            font-weight: 500
+        }
+
+        .chip[aria-pressed="true"] {
+            background: var(--ink);
+            color: var(--bg)
+        }
+
+        select {
+            font: inherit;
+            background: var(--panel);
+            color: var(--ink);
+            border: 2px solid var(--ink);
+            border-radius: 99px;
+            padding: .4rem 1rem
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.2rem
+        }
+
+        .card {
+            background: var(--panel);
+            border: 2px solid var(--ink);
+            border-radius: 20px;
+            padding: 0;
+            text-align: left;
+            overflow: hidden;
+            transition: transform .25s
+        }
+
+        .card:hover {
+            transform: translateY(-4px)
+        }
+
+        .card .pic {
+            background: color-mix(in srgb, var(--c) 22%, var(--bg));
+            padding: 1.2rem;
+            position: relative
+        }
+
+        .card .pic svg {
+            display: block;
+            width: 100%;
+            transition: transform .35s
+        }
+
+        .card:hover .pic svg {
+            transform: rotate(-5deg) scale(1.06)
+        }
+
+        .badge {
+            position: absolute;
+            left: .8rem;
+            top: .8rem;
+            background: var(--ink);
+            color: var(--bg);
+            font: 700 .75rem Syne, sans-serif;
+            padding: .25rem .6rem;
+            border-radius: 99px
+        }
+
+        .badge.s {
+            background: var(--red);
+            color: #fff
+        }
+
+        .card .in {
+            padding: 1rem 1.2rem 1.2rem
+        }
+
+        .card h3 {
+            font-size: 1.2rem
+        }
+
+        .card small {
+            color: var(--mute);
+            display: block
+        }
+
+        .pr {
+            margin-top: .5rem;
+            font: 800 1.15rem Syne, sans-serif
+        }
+
+        .pr s {
+            color: var(--mute);
+            font-weight: 400;
+            font-size: .9rem;
+            margin-left: .4rem
+        }
+
+        .perks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem
+        }
+
+        .perk {
+            border-top: 4px solid var(--ink);
+            padding-top: 1rem
+        }
+
+        .perk h3 {
+            font-size: 1.3rem;
+            margin-bottom: .4rem
+        }
+
+        .perk p {
+            margin: 0;
+            color: var(--mute)
+        }
+
+        form {
+            display: flex;
+            gap: .6rem;
+            flex-wrap: wrap;
+            margin-top: 1rem
+        }
+
+        input {
+            font: inherit;
+            padding: .8rem 1.2rem;
+            border-radius: 99px;
+            border: 2px solid var(--ink);
+            background: var(--panel);
+            color: var(--ink);
+            min-width: min(100%, 280px)
+        }
+
+        footer {
+            border-top: 2px solid var(--ink);
+            padding: 2rem 0;
+            color: var(--mute);
+            font-size: .92rem
+        }
+
+        #ov {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            z-index: 40;
+            display: none
+        }
+
+        #ov.on {
+            display: block
+        }
+
+        .pane {
+            position: fixed;
+            z-index: 50;
+            background: var(--bg);
+            color: var(--ink);
+            display: none;
+            overflow: auto
+        }
+
+        .pane.on {
+            display: block
+        }
+
+        #md {
+            inset: auto;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: min(900px, 94vw);
+            max-height: 90vh;
+            border-radius: 24px;
+            border: 2px solid var(--ink)
+        }
+
+        #md .g {
+            display: grid;
+            grid-template-columns: 1fr 1fr
+        }
+
+        #md .pic {
+            padding: 2rem;
+            display: flex;
+            align-items: center
+        }
+
+        #md .pic svg {
+            width: 100%
+        }
+
+        #md .tx {
+            padding: 2rem
+        }
+
+        #md h3 {
+            font-size: 2rem;
+            margin-bottom: .4rem
+        }
+
+        .sz {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            margin: .6rem 0 1.4rem
+        }
+
+        .sz button {
+            border: 2px solid var(--ink);
+            background: none;
+            border-radius: 10px;
+            min-width: 48px;
+            height: 42px;
+            font-weight: 500
+        }
+
+        .sz button[aria-pressed="true"] {
+            background: var(--lime);
+            color: var(--on-lime)
+        }
+
+        .sz button:disabled {
+            opacity: .3;
+            text-decoration: line-through;
+            cursor: not-allowed
+        }
+
+        #dr {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(420px, 100%);
+            padding: calc(1.2rem + env(safe-area-inset-top, 0px)) 1.2rem calc(1.2rem + env(safe-area-inset-bottom, 0px));
+            border-left: 2px solid var(--ink);
+            flex-direction: column
+        }
+
+        #dr.on {
+            display: flex
+        }
+
+        .x {
+            position: absolute;
+            top: .8rem;
+            right: .8rem;
+            z-index: 2
+        }
+
+        .it {
+            display: grid;
+            grid-template-columns: 84px 1fr auto;
+            gap: .8rem;
+            align-items: center;
+            padding: .8rem 0;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .it .th {
+            background: var(--panel);
+            border-radius: 12px;
+            padding: .3rem
+        }
+
+        .it small {
+            color: var(--mute)
+        }
+
+        .q {
+            display: inline-flex;
+            gap: .4rem;
+            align-items: center;
+            margin-top: .3rem
+        }
+
+        .q button {
+            border: 1px solid var(--ink);
+            background: none;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            line-height: 1
+        }
+
+        .bar {
+            height: 8px;
+            background: var(--line);
+            border-radius: 9px;
+            overflow: hidden;
+            margin: .4rem 0 1rem
+        }
+
+        .bar i {
+            display: block;
+            height: 100%;
+            background: var(--lime);
+            transition: width .4s
+        }
+
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+            transform: translateX(-50%);
+            background: var(--ink);
+            color: var(--bg);
+            padding: .8rem 1.4rem;
+            border-radius: 99px;
+            z-index: 60;
+            display: none;
+            max-width: 92vw
+        }
+
+        @media (max-width:820px) {
+
+            .hero .wrap,
+            #md .g,
+            .perks {
+                grid-template-columns: 1fr
+            }
+
+            nav a {
+                display: none
+            }
+
+            .stage {
+                order: -1
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrap"><a class="logo" href="#top">KPOCU<span>HUB</span></a>
+            <nav aria-label="Навігація"><a href="#shop">Каталог</a><a href="#why">Переваги</a><a href="#news">Новини</a>
+            </nav>
+            <div style="display:flex;gap:.5rem"><button class="ib" id="th" aria-label="Змінити тему">◐</button><button
+                    class="ib" id="cb" aria-label="Відкрити кошик">Кошик<b id="cn">0</b></button></div>
+        </div>
+    </header>
+    <div class="tick" aria-hidden="true">
+        <div id="tk"></div>
+    </div>
+
+    <main id="top">
+        <div class="hero">
+            <div class="wrap">
+                <div>
+                    <h1><span>Твій крок</span><span>у місті</span></h1>
+                    <p>Кросівки для щоденних маршрутів, ранкових пробіжок і ретро-настрою. Нова колекція вже у каталозі,
+                        доставка по Україні за 1–3 дні.</p>
+                    <a class="btn" href="#shop">До каталогу</a> <a class="btn lime" href="#news">Отримати −10%</a>
+                </div>
+                <div class="stage" id="hs"></div>
+            </div>
+        </div>
+
+        <section id="shop">
+            <div class="wrap">
+                <div class="top">
+                    <h2>Каталог</h2>
+                    <div class="ctl" id="ctl"><button class="chip" data-c="all" aria-pressed="true">Усі</button><button
+                            class="chip" data-c="Lifestyle" aria-pressed="false">Lifestyle</button><button class="chip"
+                            data-c="Running" aria-pressed="false">Running</button><button class="chip" data-c="Retro"
+                            aria-pressed="false">Retro</button>
+                        <label class="sr" style="position:absolute;left:-9999px" for="so">Сортування</label><select
+                            id="so">
+                            <option value="d">За замовчуванням</option>
+                            <option value="a">Спочатку дешевші</option>
+                            <option value="z">Спочатку дорожчі</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid" id="grid"></div>
+            </div>
+        </section>
+
+        <section id="why">
+            <div class="wrap">
+                <h2 style="margin-bottom:1.6rem">Чому KPOCU HUB</h2>
+                <div class="perks">
+                    <div class="perk">
+                        <h3>Оригінал</h3>
+                        <p>Працюємо напряму з постачальниками, кожна пара з гарантією автентичності.</p>
+                    </div>
+                    <div class="perk">
+                        <h3>Швидка доставка</h3>
+                        <p>Нова Пошта та Укрпошта, безкоштовно від 3 000 ₴, відправка в день замовлення.</p>
+                    </div>
+                    <div class="perk">
+                        <h3>Обмін 14 днів</h3>
+                        <p>Не підійшов розмір? Обміняємо або повернемо кошти без зайвих питань.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news">
+            <div class="wrap">
+                <h2>Дропи першими</h2>
+                <p style="color:var(--mute);max-width:50ch">Підпишіться й отримайте промокод −10% на перше замовлення та
+                    ранній доступ до нових колекцій.</p>
+                <form id="nf"><input type="email" id="em" placeholder="Ваша електронна пошта"
+                        aria-label="Електронна пошта" required><button class="btn lime"
+                        type="submit">Підписатися</button></form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="wrap">© 2026 KPOCU HUB. Демонстраційна версія: товари, ціни та оформлення умовні.</div>
+    </footer>
+
+    <div id="ov"></div>
+    <div class="pane" id="md" role="dialog" aria-modal="true" aria-label="Товар"><button class="ib x" data-close
+            aria-label="Закрити">✕</button>
+        <div class="g" id="mb"></div>
+    </div>
+    <aside class="pane" id="dr" role="dialog" aria-modal="true" aria-label="Кошик"><button class="ib x" data-close
+            aria-label="Закрити">✕</button>
+        <h2 style="font-size:2rem;margin-bottom:1rem">Кошик</h2>
+        <div id="free"></div>
+        <div id="items" style="flex:1;overflow:auto"></div>
+        <div style="padding-top:1rem">
+            <div style="display:flex;justify-content:space-between;font:800 1.3rem Syne,sans-serif;margin-bottom:1rem">
+                <span>Разом</span><span id="tot"></span></div><button class="btn lime" id="co"
+                style="width:100%;font-size:1.05rem">Оформити замовлення</button>
+        </div>
+    </aside>
+    <div id="toast" role="status"></div>
+
+    <script>
+        /* ===== ТОВАРИ: редагуйте тут (img: додайте src для реального фото) ===== */
+        const P = [
+            { id: 1, n: "Volt Runner 3", c: "Running", p: 3499, tag: "Новинка", pal: ["#c6f432", "#111", "#fff"], d: "Легка бігова модель з амортизацією та дихаючим верхом." },
+            { id: 2, n: "Street Ace", c: "Lifestyle", p: 2799, pal: ["#f4f4f0", "#e4572e", "#111"], d: "Чистий силует на кожен день. Шкіряний верх, м’яка устілка." },
+            { id: 3, n: "Retro 86", c: "Retro", p: 3199, old: 3899, pal: ["#2b4fd8", "#f2c230", "#fff"], d: "Ретро-баскетбол вісімдесятих: яскраві панелі й товста підошва." },
+            { id: 4, n: "Night Shift", c: "Running", p: 3899, tag: "Новинка", pal: ["#18181b", "#7a5cf0", "#c6f432"], d: "Темна пара зі світловідбивними вставками для вечірніх пробіжок." },
+            { id: 5, n: "Cloud Low", c: "Lifestyle", p: 2499, pal: ["#cfd8dc", "#8aa0a8", "#fff"], d: "Низький профіль, текстильний верх, ідеальна для літа." },
+            { id: 6, n: "Brick Court", c: "Retro", p: 2999, pal: ["#b5471f", "#f4f4f0", "#111"], d: "Кортовий класик у теракотових відтінках." },
+            { id: 7, n: "Pulse Trail", c: "Running", p: 3599, old: 4199, pal: ["#0f9d84", "#111", "#f4f4f0"], d: "Рельєфний протектор для паркових стежок і мокрого асфальту." },
+            { id: 8, n: "Mono White", c: "Lifestyle", p: 2299, pal: ["#fafafa", "#d0d0d0", "#111"], d: "Мінімалістичні білі кросівки, що пасують до всього." }];
+        const SIZES = [38, 39, 40, 41, 42, 43, 44, 45, 46], FREE = 3000;
+        /* ===== кінець блоку ===== */
+
+        const $ = s => document.querySelector(s), fm = n => n.toLocaleString("uk-UA") + " ₴";
+        let cat = "all", sort = "d", cart = [], sel = null, last = null;
+        try { cart = JSON.parse(localStorage.getItem("kh") || "[]") } catch (e) { }
+        const save = () => { try { localStorage.setItem("kh", JSON.stringify(cart)) } catch (e) { } };
+        const ok = (p, s) => (p.id + s) % 5 !== 0;
+        function shoe(p) { const [a, b, c] = p.pal, L = "#111"; return `<svg viewBox="0 0 400 230" role="img" aria-label="Кросівки ${p.n}"><ellipse cx="205" cy="214" rx="170" ry="8" fill="#000" opacity=".15"/><g transform="rotate(-2 200 120)" stroke="${L}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><path d="M34 188h338c4 9-6 17-20 17H58c-16 0-24-7-24-17z" fill="${L}"/><path d="M52 150C42 126 44 96 62 76C72 66 88 64 102 72C120 84 138 92 158 90C178 100 198 104 216 112C238 116 266 122 292 130C334 136 366 144 378 156C382 160 382 164 378 170L52 158z" fill="${a}"/><path d="M30 168c0-14 8-20 22-20h286c30 2 46 12 46 28 0 8-4 14-12 14H52c-14 0-22-8-22-22z" fill="${c}"/><path d="M60 174h280" stroke="#000" opacity=".15" stroke-width="2"/><path d="M296 131C336 137 366 146 378 157C382 162 381 166 377 168L300 150C304 144 302 138 296 131z" fill="${b}"/><path d="M52 150C42 126 44 96 62 76c8-8 18-9 26-6c6 22 6 50 4 80z" fill="${b}"/><path d="M110 150c36-6 84-22 134-34c22-4 36 4 30 14c-34 4-96 24-146 28z" fill="${b}" transform="translate(0 -6)"/><path d="M148 90c-6-20-4-38 8-48c12-4 24 2 26 14c2 14-4 30-10 44z" fill="${a}"/><rect x="158" y="50" width="18" height="10" rx="2" fill="${b}" stroke="none" transform="rotate(-8 167 55)"/>${[0, 1, 2, 3, 4].map(i => { const x = 178 + i * 21, y = 102 + i * 6; return `<path d="M${x} ${y - 12}L${x + 14} ${y + 2}" stroke="${L}" stroke-width="9"/><path d="M${x} ${y - 12}L${x + 14} ${y + 2}" stroke="#fff" stroke-width="4"/>` }).join("")}<path d="M62 76C72 66 88 64 102 72C120 84 138 92 158 90" fill="none" stroke="${b}" stroke-width="7"/><g fill="#000" opacity=".3" stroke="none"><circle cx="326" cy="140" r="2.5"/><circle cx="340" cy="145" r="2.5"/><circle cx="354" cy="151" r="2.5"/></g></g></svg>` }
+        function grid() {
+            let l = P.filter(p => cat === "all" || p.c === cat); if (sort === "a") l = l.slice().sort((x, y) => x.p - y.p); if (sort === "z") l = l.slice().sort((x, y) => y.p - x.p);
+            $("#grid").innerHTML = l.map(p => `<button class="card" data-id="${p.id}" style="--c:${p.pal[0]}" aria-label="${p.n}, ${fm(p.p)}"><div class="pic">${p.tag ? `<span class="badge">${p.tag}</span>` : p.old ? `<span class="badge s">Знижка</span>` : ""}${shoe(p)}</div><div class="in"><h3>${p.n}</h3><small>${p.c}</small><div class="pr">${fm(p.p)}${p.old ? `<s>${fm(p.old)}</s>` : ""}</div></div></button>`).join("")
+        }
+        const pane = id => { ["md", "dr"].forEach(x => $("#" + x).classList.toggle("on", x === id)); $("#ov").classList.toggle("on", !!id); document.body.style.overflow = id ? "hidden" : ""; if (id) $("#" + id).querySelector("[data-close]").focus(); else if (last) last.focus() };
+        function product(id) {
+            const p = P.find(x => x.id == id); sel = null;
+            $("#mb").innerHTML = `<div class="pic" style="background:color-mix(in srgb,${p.pal[0]} 22%,var(--bg))">${shoe(p)}</div><div class="tx"><h3>${p.n}</h3><small style="color:var(--mute)">${p.c}</small><div class="pr" style="font-size:1.6rem;margin:.8rem 0">${fm(p.p)}${p.old ? `<s>${fm(p.old)}</s>` : ""}</div><p style="color:var(--mute)">${p.d}</p><b>Розмір (EU)</b><div class="sz" id="sz">${SIZES.map(s => `<button data-s="${s}" aria-pressed="false" ${ok(p, s) ? "" : "disabled"}>${s}</button>`).join("")}</div><button class="btn lime" id="add" data-id="${p.id}" style="width:100%">Додати в кошик</button></div>`; pane("md")
+        }
+        function toast(t) { const e = $("#toast"); e.textContent = t; e.style.display = "block"; clearTimeout(toast.t); toast.t = setTimeout(() => e.style.display = "none", 2600) }
+        function render() {
+            const n = cart.reduce((a, i) => a + i.q, 0), sum = cart.reduce((a, i) => a + i.q * P.find(p => p.id == i.id).p, 0); $("#cn").textContent = n; $("#tot").textContent = fm(sum);
+            $("#free").innerHTML = `<small>${sum >= FREE ? "Безкоштовна доставка!" : "До безкоштовної доставки: " + fm(FREE - sum)}</small><div class="bar"><i style="width:${Math.min(100, sum / FREE * 100)}%"></i></div>`;
+            $("#items").innerHTML = cart.length ? cart.map((i, k) => { const p = P.find(x => x.id == i.id); return `<div class="it"><div class="th">${shoe(p)}</div><div><b>${p.n}</b><br><small>Розмір ${i.s}</small><div class="q"><button data-q="${k}" data-d="-1" aria-label="Менше">−</button>${i.q}<button data-q="${k}" data-d="1" aria-label="Більше">+</button></div></div><b>${fm(p.p * i.q)}</b></div>` }).join("") : `<p style="color:var(--mute)">Кошик порожній. Оберіть пару в каталозі.</p>`; save()
+        }
+        $("#hs").innerHTML = shoe(P[0]);
+        $("#tk").innerHTML = Array(8).fill("НОВИЙ ДРОП · БЕЗКОШТОВНА ДОСТАВКА ВІД 3 000 ₴ · ОБМІН 14 ДНІВ · ").join("");
+        $("#ctl").onclick = e => { const c = e.target.closest(".chip"); if (!c) return; document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === c)); cat = c.dataset.c; grid() };
+        $("#so").onchange = e => { sort = e.target.value; grid() };
+        $("#grid").onclick = e => { const c = e.target.closest(".card"); if (c) { last = c; product(c.dataset.id) } };
+        $("#mb").onclick = e => {
+            const b = e.target.closest("[data-s]"); if (b && !b.disabled) { sel = b.dataset.s; document.querySelectorAll("#sz button").forEach(x => x.setAttribute("aria-pressed", x === b)) }
+            if (e.target.id === "add") { if (!sel) { toast("Оберіть розмір"); return } const id = +e.target.dataset.id, f = cart.find(i => i.id === id && i.s === sel); f ? f.q++ : cart.push({ id, s: sel, q: 1 }); render(); toast("Додано в кошик"); pane("dr") }
+        };
+        $("#cb").onclick = e => { last = e.currentTarget; render(); pane("dr") };
+        $("#items").onclick = e => { const b = e.target.closest("[data-q]"); if (!b) return; const i = cart[+b.dataset.q]; i.q += +b.dataset.d; if (i.q < 1) cart.splice(+b.dataset.q, 1); render() };
+        document.querySelectorAll("[data-close]").forEach(b => b.onclick = () => pane(null)); $("#ov").onclick = () => pane(null);
+        addEventListener("keydown", e => { if (e.key === "Escape") pane(null) });
+        $("#co").onclick = () => { if (!cart.length) { toast("Кошик порожній"); return } cart = []; render(); pane(null); toast("Демо: замовлення не оформлюється, кошик очищено") };
+        $("#nf").onsubmit = e => { e.preventDefault(); toast("Дякуємо! У демо-версії лист не надсилається."); e.target.reset() };
+        $("#th").onclick = () => { const d = document.documentElement; d.dataset.theme = getComputedStyle(d).colorScheme.includes("dark") ? "light" : "dark" };
+        grid(); render();
+    </script>
+</body>
+
+</html>
